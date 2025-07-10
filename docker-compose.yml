@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth-service
+      - task-service
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "5001:5001"
+    environment:
+      - DB_URL=postgres://user:pass@postgres:5432/auth_db
+    depends_on:
+      - postgres
+
+  task-service:
+    build: ./task-service
+    ports:
+      - "5002:5002"
+    environment:
+      - DB_URL=postgres://user:pass@postgres:5432/task_db
+    depends_on:
+      - postgres
+
+  notif-service:
+    build: ./notif-service
+    ports:
+      - "5003:5003"
+    depends_on:
+      - mongo
+
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"
+
+  mongo:
+    image: mongo:6
+    restart: always
+    ports:
+      - "27017:27017"
