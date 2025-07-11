@@ -14,7 +14,7 @@ services:
     ports:
       - "5001:5001"
     environment:
-      - DB_URL=postgres://user:pass@postgres:5432/auth_db
+      - DB_URL=postgres://postgres:BITTU10sri@@@postgres:5432/auth_db
     depends_on:
       - postgres
 
@@ -23,7 +23,7 @@ services:
     ports:
       - "5002:5002"
     environment:
-      - DB_URL=postgres://user:pass@postgres:5432/task_db
+      - DB_URL=postgres://postgres:BITTU10sri@@@postgres:5432/task_db
     depends_on:
       - postgres
 
@@ -35,11 +35,12 @@ services:
       - mongo
 
   postgres:
-    image: postgres:14
+    image: postgres:16
     restart: always
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: BITTU10sri@@
+      POSTGRES_DB: auth_db
     ports:
       - "5432:5432"
 
@@ -48,3 +49,6 @@ services:
     restart: always
     ports:
       - "27017:27017"
+
+volumes:
+  pgdata:

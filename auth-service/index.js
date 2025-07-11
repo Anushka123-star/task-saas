@@ -45,3 +45,9 @@ res.json({ user: req.user });
 app.listen(process.env.PORT, () => {
 console.log(`Auth service running on port ${process.env.PORT}`);
 });
+
+sequelize.authenticate().then(() => {
+    console.log('✅ PostgreSQL connection successful');
+}).catch(err => {
+    console.error('❌ Unable to connect to DB:', err);
+});
